@@ -3,38 +3,50 @@ window.addEventListener('load', function() {
 
     var startBtn = document.querySelector('.startNewGame');
     var winnerMsg = document.querySelector('.winner-message');
+    var allCells = document.querySelectorAll('.cell');
+    var fieldParent = document.querySelector('.field');
+    var previousSymbol;
 
     startBtn.addEventListener('click', prepareGameSession);
-    //trialAlert.addEventListener('click',  function() {alert('Начать игру');});
-
-    var allCells = document.querySelectorAll('.cell');
-    var currentSymbol;
-    //var currentSymbol = 'x';//Avoided trouble with: Первым всегда ходит крестик
 
     function prepareGameSession() {
         winnerMsg.innerHTML = "";
         prepareGame();
-        currentSymbol = 'x';//Avoided trouble with: Первым всегда ходит крестик
+        previousSymbol = 'o';
     }
-    //prepareGame(); //Avoided: Вы делаете действия до нажатия на кнопку
+
     function prepareGame(){
     for (var i = 0; i < allCells.length; i++) {
-            //console.log(allCells[i]);
             allCells[i].classList.remove('x', 'o');
-            allCells[i].addEventListener('click', setSymbol);
         }
+    fieldParent.addEventListener('click', setSymbol);
     }
 
-    function setSymbol() {
-        this.classList.add(currentSymbol);
-        event.stopPropagation();
-        if (currentSymbol == 'x') {currentSymbol = 'o'}
-        else currentSymbol = 'x';
-        this.removeEventListener('click', setSymbol, false);//Avoided: Два раза кликаем в одно и то же поле - получаем там и крестик и нолик
+    function setSymbol(event) {
+        var result;
+        var currentSymbol;
 
-        //filledCellRemoveListeners(); //Avoided: Два раза кликаем в одно и то же поле - получаем там и крестик и нолик
+        if (previousSymbol == 'o') {currentSymbol = 'x'}
+        else currentSymbol = 'o';
 
-        var result = getWinner();
+        if ( event.target.classList.contains('x')||event.target.classList.contains('o')){
+            return;
+        }
+
+        if (result) {
+            gameEndClearListeners();
+            return;
+        }
+
+        if (!event.target.classList.contains('field')){
+            event.target.classList.add(currentSymbol);
+            previousSymbol = currentSymbol;
+
+            event.target.removeEventListener('click', setSymbol, false);//Avoided: Два раза кликаем в одно и то же поле - получаем там и крестик и нолик
+
+        }
+
+        result = getWinner();
         if (result) {
             if (result == 'x') (result = 'Крестик');
             else result = 'Нолик';
@@ -43,18 +55,9 @@ window.addEventListener('load', function() {
         }
     }
 
-    /*function filledCellRemoveListeners(){
-        for (var i = 0; i < allCells.length; i++) {
-            if (allCells[i].classList.contains('x', 'o')){
-                allCells[i].removeEventListener('click', setSymbol, false);
-            }
-        }
-    }*/
-
     function gameEndClearListeners(){
-        for (var i = 0; i < allCells.length; i++) {
-            allCells[i].removeEventListener('click', setSymbol, false);
-        }
+        var allCellsFields = document.querySelector('.field');
+        allCellsFields.removeEventListener('click', setSymbol, false);
     }
 }
 )
@@ -65,4 +68,6 @@ window.addEventListener('load', function() {
 81/100. Новые крестики/нолики не должны появляться после того, как кто-то победил
 88/100. Два раза кликаем в одно и то же поле - получаем там и крестик и нолик. Важно - из-за CSS этого может быть и не видно. Но ошибка есть
 94/100. Все почти верно. Это сообщение говорит о том что ваш код не до конца оптимален - вешать слушателя на каждую ячейку - плохая идея. Может вспомнить что события всплывают?
+94/100. Один слушатель.... замечательно, но что будет если пользователь кликнет в границу поля? Вы этого не увидите, но у поля появится класс x или o
+100/100.
 */
