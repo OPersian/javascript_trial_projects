@@ -20,6 +20,8 @@ domReady(function() {
     var playbackRateMenuButton = videojs.getComponent('PlaybackRateMenuButton');
     console.log("%%%%%%%%%%%%%% playbackRateMenuButton %%%%%%%%%%%%%%" + playbackRateMenuButton);
     var controlBar = videojs.getComponent('ControlBar');
+    var videoPlayer = videojs('{{ video_player_id }}');
+    console.log('%%%%%%%%%%% videoPlayer %%%%%%%%%%% ' + videoPlayer);
 
     /**
      * The custom component for controlling the playback rate.
@@ -34,8 +36,12 @@ domReady(function() {
         constructor: function (player, options) {
             playbackRateMenuButton.call(this, player, options);
             this.on('ratechange', this.updateLabel);
-            this.on('click', this.handleClick);
-        }
+            this.on('click', this.onClick);
+        },
+        onClick: function onClick() {
+            console.log('&&&&&&&&&&&& playbackRateMenuButtonExtended CLICKED &&&&&&&&&&&&');
+            return false;
+    },
     });
 
     /**
@@ -45,9 +51,11 @@ domReady(function() {
      * @method updateLabel
      */
     playbackRateMenuButtonExtended.prototype.updateLabel = function(event){
-        console.log('LAAAAAAAA LAAAAAAAAAA LAAAAAAAAAA');
+        console.log('&&&&&&&&&&&& playbackRateMenuButtonExtended UPDATED SPEED LABEL &&&&&&&&&&&&');
         var speed = this.player().playbackRate() || 1;
         this.labelEl_.innerHTML = speed + 'x';
+        console.log('&&&&&&&&&&&& UPDATED SPEED LABEL: playbackRate &&&&&&&&&&&&' + this.player().playbackRate());
+        console.log('&&&&&&&&&&&& UPDATED SPEED LABEL: innerHTML &&&&&&&&&&&&' + this.labelEl_.innerHTML);
     };
 
     /**
@@ -58,8 +66,10 @@ domReady(function() {
      */
     playbackRateMenuButtonExtended.prototype.handleClick = function(event){
         // FIXME for Brightcove
-        console.log('VOILAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
-        return false;
+        console.log('&&&&&&&&&&&& playbackRateMenuButtonExtended CLICKED &&&&&&&&&&&&');
+        // return false;
+        var speed = this.player().playbackRate() || 1;
+        this.player().playbackRate(speed)
     };
 
     var bcVideojsSpeedHandler = function(options){
@@ -79,6 +89,9 @@ domReady(function() {
     // Charge the component into videojs
     controlBar.prototype.options_.children.push('PlaybackRateMenuButton');
     player.addChild('PlaybackRateMenuButton');  // FIXME Brightcove
+//    videojs.plugin('videoJSSpeedHandler', function(options){
+//      controlBar.prototype.options_.children.push('PlaybackRateMenuButton');
+//    })
     // player.addChild('playbackRateMenuButtonExtended');  // FIXME Brightcove
     // videojs.plugin('bcVideojsSpeedHandler', bcVideojsSpeedHandler);  // TODO
     // //// this.controlBar.customControlSpacer.addChild('PlaybackRateMenuButton');        // //// this.controlBar.addChild('PlaybackRateMenuButton');
