@@ -18,10 +18,7 @@ var domReady = function(callback) {
 domReady(function() {
 
     var playbackRateMenuButton = videojs.getComponent('PlaybackRateMenuButton');
-    console.log("%%%%%%%%%%%%%% playbackRateMenuButton %%%%%%%%%%%%%%" + playbackRateMenuButton);
     var controlBar = videojs.getComponent('ControlBar');
-    var videoPlayer = videojs('{{ video_player_id }}');
-    console.log('%%%%%%%%%%% videoPlayer %%%%%%%%%%% ' + videoPlayer);
 
     /**
      * The custom component for controlling the playback rate.
@@ -54,8 +51,6 @@ domReady(function() {
         console.log('&&&&&&&&&&&& playbackRateMenuButtonExtended UPDATED SPEED LABEL &&&&&&&&&&&&');
         var speed = this.player().playbackRate() || 1;
         this.labelEl_.innerHTML = speed + 'x';
-        console.log('&&&&&&&&&&&& UPDATED SPEED LABEL: playbackRate &&&&&&&&&&&&' + this.player().playbackRate());
-        console.log('&&&&&&&&&&&& UPDATED SPEED LABEL: innerHTML &&&&&&&&&&&&' + this.labelEl_.innerHTML);
     };
 
     /**
@@ -72,7 +67,7 @@ domReady(function() {
         this.player().playbackRate(speed)
     };
 
-    var bcVideojsSpeedHandler = function(options){
+    var videoJSSpeedHandler = function(options){
       if (this.tagAttributes.brightcove !== undefined) {
         console.log('&&&&&&&&&&&& brightcove &&&&&&&&&&&&');
         this.controlBar.customControlSpacer.addChild('playbackRateMenuButtonExtended', options);
@@ -85,25 +80,16 @@ domReady(function() {
     // Register the component under the name of the native one to rewrite it
     videojs.registerComponent('PlaybackRateMenuButton', playbackRateMenuButtonExtended);
 
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Charge the component into videojs
-    controlBar.prototype.options_.children.push('PlaybackRateMenuButton');
-    player.addChild('PlaybackRateMenuButton');  // FIXME Brightcove
-//    videojs.plugin('videoJSSpeedHandler', function(options){
-//      controlBar.prototype.options_.children.push('PlaybackRateMenuButton');
-//    })
-    // player.addChild('playbackRateMenuButtonExtended');  // FIXME Brightcove
-    // videojs.plugin('bcVideojsSpeedHandler', bcVideojsSpeedHandler);  // TODO
-    // //// this.controlBar.customControlSpacer.addChild('PlaybackRateMenuButton');        // //// this.controlBar.addChild('PlaybackRateMenuButton');
+    // controlBar.prototype.options_.children.push('PlaybackRateMenuButton');
+    // player.controlBar.customControlSpacer.addChild('PlaybackRateMenuButton');
+    videojs.plugin('videoJSSpeedHandler', videoJSSpeedHandler);
 
-    // controlBar.addChild('playbackRateMenuButtonExtended');
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    console.log("%%%%%%%%%%%%%% playbackRateMenuButtonExtended %%%%%%%%%%%%%%" + playbackRateMenuButtonExtended);
-    var playbackRateMenuButtonNEW = videojs.getComponent('PlaybackRateMenuButton');
-    console.log("%%%%%%%%%%%%%% playbackRateMenuButton NEW %%%%%%%%%%%%%%" + playbackRateMenuButtonNEW);
-    console.log("%%%%%%%%%%%%%% updateLabel %%%%%%%%%%%%%%" + playbackRateMenuButtonNEW.prototype.updateLabel);
-    console.log("%%%%%%%%%%%%%% handleClick %%%%%%%%%%%%%%" + playbackRateMenuButtonNEW.prototype.handleClick);
-    console.log("%%%%%%%%%%%%%% children %%%%%%%%%%%%%%" + controlBar.prototype.options_.children);
+    // console.log("%%%%%%%%%%%%%% playbackRateMenuButtonExtended %%%%%%%%%%%%%%" + playbackRateMenuButtonExtended);
+    // var playbackRateMenuButtonNEW = videojs.getComponent('PlaybackRateMenuButton');
+    // console.log("%%%%%%%%%%%%%% playbackRateMenuButton NEW %%%%%%%%%%%%%%" + playbackRateMenuButtonNEW);
+    // console.log("%%%%%%%%%%%%%% updateLabel %%%%%%%%%%%%%%" + playbackRateMenuButtonNEW.prototype.updateLabel);
+    // console.log("%%%%%%%%%%%%%% handleClick %%%%%%%%%%%%%%" + playbackRateMenuButtonNEW.prototype.handleClick);
+    // console.log("%%%%%%%%%%%%%% children %%%%%%%%%%%%%%" + controlBar.prototype.options_.children);
 
 });
