@@ -64,11 +64,11 @@ domReady(function() {
 
     var bcVideojsSpeedHandler = function(options){
       if (this.tagAttributes.brightcove !== undefined) {
-        alert('1');
+        console.log('&&&&&&&&&&&& brightcove &&&&&&&&&&&&');
         this.controlBar.customControlSpacer.addChild('playbackRateMenuButtonExtended', options);
       } else {
+        console.log('&&&&&&&&&&&& NOT brightcove &&&&&&&&&&&&');
         this.controlBar.addChild('playbackRateMenuButtonExtended', options);
-        alert('2');
       }
     };
 
