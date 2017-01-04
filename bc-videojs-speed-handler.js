@@ -6,90 +6,99 @@
  *
  */
 
-/** Run a callback when DOM is fully loaded */
-var domReady = function(callback) {
-  if (document.readyState === "interactive" || document.readyState === "complete") {
-    callback();
-  } else {
-    document.addEventListener("DOMContentLoaded", callback);
-  }
-};
+(function () {
 
-domReady(function() {
+    "use strict";
+    function videoJSSpeedHandler(options) {
 
-    var playbackRateMenuButton = videojs.getComponent('PlaybackRateMenuButton');
-    var controlBar = videojs.getComponent('ControlBar');
+        var playbackRateMenuButton = videojs.getComponent('PlaybackRateMenuButton');
+        var controlBar = videojs.getComponent('ControlBar');
+        var menuButton = videojs.getComponent('MenuButton');
+        var button = videojs.getComponent('Button');
+        var videojsPlayer = videojs('{{ video_player_id }}');
 
-    /**
-     * The custom component for controlling the playback rate.
-     *
-     * @param {Player|Object} player
-     * @param {Object=} options
-     * @extends PlaybackRateMenuButton
-     * @class PlaybackRateMenuButtonExtended
-     */
-    var playbackRateMenuButtonExtended = videojs.extend(playbackRateMenuButton, {
-        /** @constructor */
-        constructor: function (player, options) {
-            playbackRateMenuButton.call(this, player, options);
-            this.on('ratechange', this.updateLabel);
-            this.on('click', this.onClick);
-        },
-        onClick: function onClick() {
-            console.log('&&&&&&&&&&&& playbackRateMenuButtonExtended CLICKED &&&&&&&&&&&&');
+        /**
+         * The custom component for controlling the playback rate.
+         *
+         * @param {Player|Object} player
+         * @param {Object=} options
+         * @extends PlaybackRateMenuButton
+         * @class PlaybackRateMenuButtonExtended
+         */
+        var playbackRateMenuButtonExtended = videojs.extend(playbackRateMenuButton, {
+            /** @constructor */
+            constructor: function (player, options) {
+                playbackRateMenuButton.call(this, player, options);
+                this.on('ratechange', this.updateLabel);
+                this.on('click', this.handleClick);
+                this.createEl();
+            },
+            onClick: function onClick() {
+                console.log('&&&&&&&&&&&& CLICKED &&&&&&&&&&&&');
+                return false;
+            },
+            createEl: function createEl(props, attributes) {
+                var el = button.prototype.createEl.call(this);
+                // var el = menuButton.prototype.createEl.call(this);
+                this.labelEl_ = document.createElement('div')
+                this.labelEl_.className = 'vjs-playback-rate-value_RRR';
+                this.labelEl_.innerHTML = 1.0;
+                videojsPlayer.el().appendChild(this.labelEl_);
+                console.log('&&&&&&&&&&&& CREATED EL &&&&&&&&&&&&');
+                return el;
+            },
+        });
+
+        /**
+         * Update Speed button label when rate is changed.
+         * Undefined rate is replaced by significant value.
+         *
+         * @method updateLabel
+         */
+        playbackRateMenuButtonExtended.prototype.updateLabel = function(event){
+            console.log('&&&&&&&&&&&& UPDATED SPEED LABEL &&&&&&&&&&&&');
+            var speed = this.player().playbackRate() || 1;
+            this.labelEl_.innerHTML = speed + 'x';
+        };
+
+        /**
+         * Handle click on Speed control.
+         * Do nothing when control is clicked.
+         *
+         * @method handleClick
+         */
+        playbackRateMenuButtonExtended.prototype.handleClick = function(event){
+            // FIXME for Brightcove
+            var el = event.currentTarget;
+            console.log('&&&&&&&&&&&& CLICKED el &&&&&&&&&&&&' + el);
             return false;
-    },
-    });
+        };
 
-    /**
-     * Update Speed button label when rate is changed.
-     * Undefined rate is replaced by significant value.
-     *
-     * @method updateLabel
-     */
-    playbackRateMenuButtonExtended.prototype.updateLabel = function(event){
-        console.log('&&&&&&&&&&&& playbackRateMenuButtonExtended UPDATED SPEED LABEL &&&&&&&&&&&&');
-        var speed = this.player().playbackRate() || 1;
-        this.labelEl_.innerHTML = speed + 'x';
-    };
+        // Register the component under the name of the native one to rewrite it.
+        videojs.registerComponent('PlaybackRateMenuButton', playbackRateMenuButtonExtended);
 
-    /**
-     * Handle click on Speed control.
-     * Do nothing when control is clicked.
-     *
-     * @method handleClick
-     */
-    playbackRateMenuButtonExtended.prototype.handleClick = function(event){
-        // FIXME for Brightcove
-        console.log('&&&&&&&&&&&& playbackRateMenuButtonExtended CLICKED &&&&&&&&&&&&');
-        // return false;
-        var speed = this.player().playbackRate() || 1;
-        this.player().playbackRate(speed)
-    };
+        // Charge the component into videojs
+        if (this.tagAttributes.brightcove !== undefined) {
+            this.controlBar.customControlSpacer.addChild('PlaybackRateMenuButton', options);
+            // Add the new component as a default player child
+            videojsPlayer.addChild('PlaybackRateMenuButton');
+        } else {
+            controlBar.prototype.options_.children.push('PlaybackRateMenuButton');
+        }
 
-    var videoJSSpeedHandler = function(options){
-      if (this.tagAttributes.brightcove !== undefined) {
-        console.log('&&&&&&&&&&&& brightcove &&&&&&&&&&&&');
-        this.controlBar.customControlSpacer.addChild('playbackRateMenuButtonExtended', options);
-      } else {
-        console.log('&&&&&&&&&&&& NOT brightcove &&&&&&&&&&&&');
-        this.controlBar.addChild('playbackRateMenuButtonExtended', options);
-      }
-    };
+         // console.log("%%%%%%%%%%%%%% playbackRateMenuButtonExtended %%%%%%%%%%%%%%" + playbackRateMenuButtonExtended);
+         var playbackRateMenuButtonNEW = videojs.getComponent('PlaybackRateMenuButton');
+         var controlBarNEW = videojs.getComponent('ControlBar');
+         console.log("%%%%%%%%%%%%%% playbackRateMenuButton NEW %%%%%%%%%%%%%%" + playbackRateMenuButtonNEW);
+         // console.log("%%%%%%%%%%%%%% updateLabel %%%%%%%%%%%%%%" + playbackRateMenuButtonNEW.prototype.updateLabel);
+         // console.log("%%%%%%%%%%%%%% handleClick %%%%%%%%%%%%%%" + playbackRateMenuButtonNEW.prototype.handleClick);
+         console.log("%%%%%%%%%%%%%% children %%%%%%%%%%%%%%" + controlBarNEW.prototype.options_.children);
 
-    // Register the component under the name of the native one to rewrite it
-    videojs.registerComponent('PlaybackRateMenuButton', playbackRateMenuButtonExtended);
+        return this;
+    }
 
-    // Charge the component into videojs
-    // controlBar.prototype.options_.children.push('PlaybackRateMenuButton');
-    // player.controlBar.customControlSpacer.addChild('PlaybackRateMenuButton');
-    videojs.plugin('videoJSSpeedHandler', videoJSSpeedHandler);
+    // Export plugin to the root
+    window.videoJSSpeedHandler = videoJSSpeedHandler;
+    window.videojs.plugin('videoJSSpeedHandler', videoJSSpeedHandler);
 
-    // console.log("%%%%%%%%%%%%%% playbackRateMenuButtonExtended %%%%%%%%%%%%%%" + playbackRateMenuButtonExtended);
-    // var playbackRateMenuButtonNEW = videojs.getComponent('PlaybackRateMenuButton');
-    // console.log("%%%%%%%%%%%%%% playbackRateMenuButton NEW %%%%%%%%%%%%%%" + playbackRateMenuButtonNEW);
-    // console.log("%%%%%%%%%%%%%% updateLabel %%%%%%%%%%%%%%" + playbackRateMenuButtonNEW.prototype.updateLabel);
-    // console.log("%%%%%%%%%%%%%% handleClick %%%%%%%%%%%%%%" + playbackRateMenuButtonNEW.prototype.handleClick);
-    // console.log("%%%%%%%%%%%%%% children %%%%%%%%%%%%%%" + controlBar.prototype.options_.children);
-
-});
+}).call(this);
