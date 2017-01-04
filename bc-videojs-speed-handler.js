@@ -78,7 +78,7 @@ domReady(function() {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Charge the component into videojs
     controlBar.prototype.options_.children.push('PlaybackRateMenuButton');
-    // player.addChild('PlaybackRateMenuButton');  // FIXME Brightcove
+    player.addChild('PlaybackRateMenuButton');  // FIXME Brightcove
     // player.addChild('playbackRateMenuButtonExtended');  // FIXME Brightcove
     // videojs.plugin('bcVideojsSpeedHandler', bcVideojsSpeedHandler);  // TODO
     // //// this.controlBar.customControlSpacer.addChild('PlaybackRateMenuButton');        // //// this.controlBar.addChild('PlaybackRateMenuButton');
@@ -87,10 +87,10 @@ domReady(function() {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     console.log("%%%%%%%%%%%%%% playbackRateMenuButtonExtended %%%%%%%%%%%%%%" + playbackRateMenuButtonExtended);
-    console.log("%%%%%%%%%%%%%% updateLabel %%%%%%%%%%%%%%" + playbackRateMenuButtonExtended.prototype.updateLabel);
-    console.log("%%%%%%%%%%%%%% handleClick %%%%%%%%%%%%%%" + playbackRateMenuButtonExtended.prototype.handleClick);
     var playbackRateMenuButtonNEW = videojs.getComponent('PlaybackRateMenuButton');
     console.log("%%%%%%%%%%%%%% playbackRateMenuButton NEW %%%%%%%%%%%%%%" + playbackRateMenuButtonNEW);
+    console.log("%%%%%%%%%%%%%% updateLabel %%%%%%%%%%%%%%" + playbackRateMenuButtonNEW.prototype.updateLabel);
+    console.log("%%%%%%%%%%%%%% handleClick %%%%%%%%%%%%%%" + playbackRateMenuButtonNEW.prototype.handleClick);
     console.log("%%%%%%%%%%%%%% children %%%%%%%%%%%%%%" + controlBar.prototype.options_.children);
 
 });
