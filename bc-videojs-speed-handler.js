@@ -6,6 +6,15 @@
  *
  */
 
+/** Run a callback when DOM is fully loaded */
+var domReady = function(callback) {
+  if (document.readyState === "interactive" || document.readyState === "complete") {
+    callback();
+  } else {
+    document.addEventListener("DOMContentLoaded", callback);
+  }
+};
+
 domReady(function() {
 
     var playbackRateMenuButton = videojs.getComponent('PlaybackRateMenuButton');
