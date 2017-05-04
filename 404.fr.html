@@ -1,0 +1,544 @@
+{% extends 'base_translated.html' %}
+
+{% block title %}404 - Page non trouvée | {% endblock %}
+
+{% block offcanvas_menu %}
+    <li class="nav-item lang-picker" aria-haspopup="true">
+        <a href="#lang-picker">
+            Français
+            <i class="icon-arrow-down-small-white"></i></a>
+        <ul>
+
+                <li class="nav-item">
+                    <a href="/api/set-lang/?lang=en&redir=">
+                        English</a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="/api/set-lang/?lang=es&redir=">
+                        Español</a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="/api/set-lang/?lang=pt-br&redir=">
+                        Português</a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="/api/set-lang/?lang=de&redir=">
+                        Deutsch</a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="/api/set-lang/?lang=fr&redir=">
+                        Français</a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="/api/set-lang/?lang=it&redir=">
+                        Italiano</a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="/api/set-lang/?lang=ja&redir=">
+                        日本語</a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="/api/set-lang/?lang=ko&redir=">
+                        한국어</a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="/api/set-lang/?lang=zh&redir=">
+                        中文</a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="/api/set-lang/?lang=zh-cn&redir=">
+                        中文(简体)</a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="/api/set-lang/?lang=zh-hk&redir=">
+                        中文(香港)</a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="/api/set-lang/?lang=th&redir=">
+                        ภาษาไทย</a>
+                </li>
+
+        </ul>
+    </li>
+    <li class="nav-item"><a href="/register/">Rejoins </a></li>
+    <li class="nav-item"><a href="/login/">Se connecter</a></li>
+    <li class="nav-item"><a href="/">Accueil</a></li>
+    <li class="nav-item"><a href="/find-guys/">Trouver des mecs</a>
+    <li class="nav-item"><a href="/search-by-name">Chercher par nom d'utilisateur</a>
+    <li class="nav-item">
+        <a href="/blog/">Blog</a>
+        <ul>
+            <li class="nav-item"><a href="/blog/">Derniers blogs</a></li>
+            <li class="nav-item"><a href="/gay-events-and-travel/">Événements et voyages</a></li>
+            <li class="nav-item"><a href="/gay-celebrities-and-gossip/">Célébrités et potins</a></li>
+            <li class="nav-item"><a href="/gay-health-and-fitness/">Santé et forme</a></li>
+            <li class="nav-item"><a href="/gay-entertainment/">Divertissements</a></li>
+            <li class="nav-item"><a href="/gay-news-and-politics/">Informations et politique gay</a></li>
+            <li class="nav-item"><a href="/gay-dating/">Rencontres gay</a></li>
+            <li class="nav-item"><a href="/contests/">Concours</a></li>
+            <li class="nav-item"><a href="/gay-culture-and-identity/">Culture et identité</a></li>
+            <li class="nav-item"><a href="/gay-porn-and-sex/">Sexe et porno gay</a></li>
+            <li class="nav-item"><a href="/blog/">Tout voir</a></li>
+        </ul>
+    </li>
+    <li class="nav-item"><a href="/chat/">Chat</a></li>
+    <li class="nav-item"><a href="/gay-cruise/">Naviguer</a></li>
+{% endblock %}
+
+{% block page_continer %}
+    <header id="region-header" role="banner">
+        <div class="inner">
+            <div class="row">
+                <nav class="page-header small-16 columns">
+
+                    <div class="page-header-small clearfix not-logged-in">
+                        <a class="region-offcanvas-primary-btn menu-icon-btn" href="#">
+                            <img src="/static/web/img/mobile_nav_btn@2x.png" alt=""></a>
+
+
+                            <a href="/">
+                                <img class="logo-mobile" src="/static/web/img/logo_thin_header@2x.png" alt=""></a>
+                            <div class="buttons">
+
+                                    <a class="btn-primary small" href="/register/">Rejoins </a>
+
+                                <a class="btn-primary small" href="/login/">Se connecter</a>
+                            </div>
+
+                    </div>
+
+
+                    <div class="page-header-large">
+                        <a class="logo" href="/">
+                            <img src="/static/web/img/logo_header_large@2x.png" alt=""></a>
+
+                        <div class="nav-secondary-container clearfix">
+
+                            <ul class="nav-secondary-menu">
+
+
+    <li class="nav-item nav-item-search nav-dd-container">
+        <a id="nav-dd-trigger-search" class="nav-dd-trigger nav-dd-trigger-search nav-dd-menu-trigger" data-dd-id="search">
+            Chercher
+            <i class="icon-search-tiny"></i>
+        </a>
+        <nav id="nav-search" class="nav-dd nav-dd-search" data-dd-trigger-id="search">
+            <form id="search-form" class="search-form" action="/search-by-name" method="post">
+                <label>Chercher</label>
+                <input type="text" name="nq" value="" placeholder="Entrer le nom d'utilisateur" autocomplete="off">
+                <button type="submit"><i class="icon-search-tiny-grey"></i></button>
+            </form>
+
+            <div class="results hide"></div>
+
+            <div class="empty hide">
+                Pas d'utilisateurs correspondant
+            </div>
+        </nav>
+    </li>
+
+
+
+    <li class="nav-item nav-item-lang-picker nav-dd-container">
+        <a class="nav-dd-trigger nav-dd-trigger-lang nav-dd-menu-trigger" data-dd-id="lang">
+            Français
+            <i class="pip"></i>
+        </a>
+        <nav id="nav-lang" class="nav-dd nav-dd-menu nav-dd-lang" data-dd-trigger-id="lang">
+            <ul class="nav-dd-list">
+
+                    <li>
+                        <a href="/api/set-lang/?lang=en&redir=">
+                            English</a>
+
+                    <li>
+                        <a href="/api/set-lang/?lang=es&redir=">
+                            Español</a>
+
+                    <li>
+                        <a href="/api/set-lang/?lang=pt-br&redir=">
+                            Português</a>
+
+                    <li>
+                        <a href="/api/set-lang/?lang=de&redir=">
+                            Deutsch</a>
+
+                    <li>
+                        <a href="/api/set-lang/?lang=fr&redir=">
+                            Français</a>
+
+                    <li>
+                        <a href="/api/set-lang/?lang=it&redir=">
+                            Italiano</a>
+
+                    <li>
+                        <a href="/api/set-lang/?lang=ja&redir=">
+                            日本語</a>
+
+                    <li>
+                        <a href="/api/set-lang/?lang=ko&redir=">
+                            한국어</a>
+
+                    <li>
+                        <a href="/api/set-lang/?lang=zh&redir=">
+                            中文</a>
+
+                    <li>
+                        <a href="/api/set-lang/?lang=zh-cn&redir=">
+                            中文(简体)</a>
+
+                    <li>
+                        <a href="/api/set-lang/?lang=zh-hk&redir=">
+                            中文(香港)</a>
+
+                    <li>
+                        <a href="/api/set-lang/?lang=th&redir=">
+                            ภาษาไทย</a>
+
+            </ul>
+        </nav>
+    </li>
+                            </ul>
+                        </div>
+
+                        <div class="nav-primary-container clearfix">
+
+                            <ul class="nav-primary-menu nav-group-links">
+                                <li class="nav-item">
+                                    <a class="findguys" href="/find-guys/">Trouver des mecs</a></li>
+
+
+
+
+        <li class="nav-item nav-dd-container">
+            <a class="blog nav-dd-menu-trigger nav-dd-trigger" href="/blog/" data-dd-id="blog">
+                Blog
+                <i class="icon-arrow-down-small-white"></i>
+            </a>
+            <nav id="nav-blog" class="nav-dd nav-dd-menu nav-dd-blog" data-dd-trigger-id="blog">
+                <ul class="nav-dd-list">
+                    <li><a href="/blog/">Derniers blogs</a></li>
+
+
+                        <li><a href="/gay-events-and-travel/">Événements et voyages</a></li>
+
+                        <li><a href="/gay-celebrities-and-gossip/">Célébrités et potins</a></li>
+
+                        <li><a href="/gay-health-and-fitness/">Santé et forme</a></li>
+
+                        <li><a href="/gay-entertainment/">Divertissements</a></li>
+
+                        <li><a href="/gay-news-and-politics/">Informations et politique gay</a></li>
+
+                        <li><a href="/gay-dating/">Rencontres gay</a></li>
+
+                        <li><a href="/contests/">Concours</a></li>
+
+                        <li><a href="/gay-culture-and-identity/">Culture et identité</a></li>
+
+                        <li><a href="/gay-porn-and-sex/">Sexe et porno gay</a></li>
+
+                </ul>
+                <ul class="nav-dd-list special">
+                    <li>
+                        <a href="/blog/"><span>Tout voir</span><i class="icon-arrow-right-small-white"></i></a>
+                    </li>
+                </ul>
+            </nav>
+        </li>
+
+
+                                <li class="nav-item"><a class="chat" href="/chat/">Chat</a></li>
+                                <li class="nav-item"><a class="cruise" href="/gay-cruise/">Naviguer</a></li>
+
+                                <li class="divider"></li>
+
+
+    <li class="nav-item nav-dd-container">
+        <a class="nav-dd-trigger nav-dd-trigger-social nav-dd-menu-trigger" data-dd-id="social">
+            <i class="icon-social"></i>
+        </a>
+        <nav id="nav-social" class="nav-dd nav-dd-menu nav-dd-social" data-dd-trigger-id="social">
+            <ul class="nav-dd-list">
+                <li>
+                    <a href="http://twitter.com/guyspyapp" target="_blank" title="GuySpy sur Twitter">
+                        <i class="icon-social-twitter"></i></a></li>
+                <li>
+                    <a href="http://www.facebook.com/guyspy.gay.dating.apps" target="_blank" title="GuySpy sur Facebook">
+                        <i class="icon-social-facebook"></i></a></li>
+                <li>
+                    <a href="http://www.youtube.com/user/guyspyapp" target="_blank" title="GuySpy sur Youtube">
+                        <i class="icon-social-youtube"></i></a></li>
+                <li>
+                    <a href="https://plus.google.com/+GuyspyLife" target="_blank" title="GuySpy sur Google Plus">
+                        <i class="icon-social-gplus"></i></a></li>
+                <li>
+                    <a href="http://instagram.com/guyspyapp" target="_blank" title="GuySpy sur Instagram">
+                        <i class="icon-social-instagram"></i></a></li>
+                <li>
+                    <a href="http://guyspyapp.tumblr.com/" target="_blank" title="GuySpy sur Tumblr">
+                        <i class="icon-social-tumblr"></i></a></li>
+            </ul>
+        </nav>
+    </li>
+                            </ul>
+
+
+
+                            <ul class="nav-primary-menu nav-group-user">
+
+
+    <li class="nav-item nav-dd-container hide-for-medium-down">
+        <a id="login-btn" class="nav-dd-menu-trigger nav-dd-trigger" data-dd-id="login" href="/login/" title="Se connecter à ">
+            Se connecter
+            <i class="icon-arrow-down-small-white"></i>
+        </a>
+        <div id="popup-login" class="nav-dd nav-dd-menu nav-dd-login">
+
+
+        <form class="single-column login-form-ajax" action="http://www.guyspy.com/login/" method="post">
+
+
+
+                <input id="id_redir" name="redir" type="hidden" value="/" />
+
+                <input id="id_uid" name="uid" type="hidden" />
+
+            <ul class="nav-dd-list">
+
+                    <li>
+                        <div class="control-group">
+                            <label>Pseudo ou e-mail</label>
+                            <div class="controls">
+                                <input id="id_username_or_email" name="username_or_email" type="text" />
+                            </div>
+                        </div>
+                    </li>
+
+                    <li>
+                        <div class="control-group">
+                            <label>Mot de passe</label>
+                            <div class="controls">
+                                <input id="id_password" name="password" type="password" />
+                            </div>
+                        </div>
+                    </li>
+
+                <li class="clearfix">
+                    <a href="/account-recover/" class="forgot-pass-link">
+                        Mot de passe oublié ?
+                    </a>
+                </li>
+            </ul>
+            <ul class="nav-dd-list special">
+                <li>
+                    <button class="nav-dd-btn form-login-submit">
+                        Se connecter
+                        <i class="dd-icon-login right"></i>
+                    </button>
+                </li>
+            </ul>
+        </form>
+
+        </div>
+    </li>
+                                    <li class="nav-item hide-for-medium-down"><a href="/register/" title="Rejoins ">Rejoins </a></li>
+
+                            </ul>
+                        </div>
+
+
+                    </div>
+
+
+                </nav>
+            </div>
+        </div>
+        <div class="multicolor-break"></div>
+    </header>
+
+
+    <div id="popup-notifs" class="popup-notif-container">
+
+
+
+        <script type="text/html" id="popup-notif-incoming-video-template">
+            <div class="popup-notif confirm-notif incoming-video-notif">
+                <div class="inner">
+                    <img class="avatar" src="<%= profileimage %>" alt="">
+                    <div class="content">
+                        Chat vidéo de la part de <%= username %>.
+                    </div>
+                    <ul>
+                        <li><a href="#" class="decline" data-uid="<%= uid %>" data-accept="0" title="Refuser"><i class="icon-button-decline"></i></a></li>
+                        <li><a href="<%= targeturl %>" data-uid="<%= uid %>" data-accept="1" title="Accepter"><i class="icon-button-accept"></i></a></li>
+                    </ul>
+                </div>
+                <div class="panel-shadow"></div>
+            </div>
+        </script>
+
+    </div>
+
+
+
+
+        <div id="region-featured" class="region-featured columns">
+
+        <div class="error-page-graphic-bg">
+            <div class="multicolor-overlay">
+                <div class="error-page-content row">
+                    <div class="content-column">
+                        <h1>Erreur 404</h1>
+                        <h2>Cette page a peut-être été déplacée, supprimée, ou n'existe tout simplement pas.</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        </div>
+
+
+
+
+
+
+    <footer role="contentinfo">
+        <div class="row">
+            <div class="inner">
+                <div class="small-7 large-3 columns">
+                    <img src="/static/web/img/logo_notld@2x.png" alt="">
+                </div>
+                <div class="small-1 large-1 columns">&nbsp;</div>
+                <div class="small-8 large-4 columns">
+                    <h5>Rejoignez-nous</h5>
+
+    <ul class="social-icons small-icons">
+        <li>
+            <a href="http://twitter.com/guyspyapp" target="_blank" title="GuySpy sur Twitter">
+                <i class="icon-social-twitter"></i></a></li>
+        <li>
+            <a href="http://www.facebook.com/guyspy.gay.dating.apps" target="_blank" title="GuySpy sur Facebook">
+                <i class="icon-social-facebook"></i></a></li>
+        <li>
+            <a href="http://www.youtube.com/user/guyspyapp" target="_blank" title="GuySpy sur Youtube">
+                <i class="icon-social-youtube"></i></a></li>
+        <li>
+            <a href="http://guyspyapp.tumblr.com/" target="_blank" title="GuySpy sur Tumblr">
+                <i class="icon-social-tumblr"></i></a></li>
+    </ul>
+
+                    <h5>Télécharge notre application</h5>
+
+    <ul class="small-icons app-icons">
+        <li>
+            <a href="http://itunes.apple.com/app/id421504778?mt=8" target="_blank" title="GuySpy pour iOS">
+                <i class="icon-app-ios-white"></i></a></li>
+        <li>
+            <a href="http://www.windowsphone.com/en-us/store/app/guyspy/f9e718f7-3e5e-44a6-b518-0a5701178517" target="_blank" title="GuySpy pour Windows Phone">
+                <i class="icon-app-windows-white"></i></a></li>
+        <li>
+            <a href="http://market.android.com/details?id=com.tarang.guyspy.and21&amp;referrer=utm_source%3Dwebsite%26utm_medium%3Dwebsite%26utm_campaign%3DGuySpy%2520Website%2520App%2520Install" target="_blank" title="GuySpy pour Android">
+                <i class="icon-app-android-white"></i></a></li>
+    </ul>
+                </div>
+                <div class="small-16 large-8 columns">
+                    <div class="row">
+                        <div class="small-8 large-8 columns">
+                            <ul>
+                                <li><a href="/about-guy-spy-mobile-dating-apps/">À propos de GuySpy</a></li>
+
+                                    <li><a href="/upgrade/">GuySpy+</a></li>
+
+                                <li><a href="/advertise-with-guyspy/">Faites de la pub avec nous</a></li>
+                                <li><a href="/contact-us/">Contact</a></li>
+                                <li><a href="/press-kit/">Dossier de presse</a></li>
+                            </ul>
+                        </div>
+                        <div class="small-8 large-8 columns">
+                            <ul>
+                                <li><a href="/sponsorships/">Sponsors</a></li>
+                                <li><a href="/guyspy-jobs/">Emplois à GuySpy</a></li>
+                                <li><a href="/user-agreement/">Conditions d'utilisation</a></li>
+                                <li><a href="/privacy-policy/">Charte de confidentialité</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="inner">
+                <div class="small-16 large-12 push-4 columns">
+                    <div class="copyright">
+                        &copy; 2014 Stark Mobile Technologies, LLC.<br>
+                        Tous droits réservés.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+{% endblock %}
+
+{% block hidden_elements %}
+    <div id="reportuser-profile" class="popup-container reportuser-container">
+        <div class="inner">
+            <form class="form" id="reportuser-profile-form" data-uid="">
+                <a class="popup-close-btn" href="#"><i></i></a>
+
+                <h3>Signaler l'utilisateur</h3>
+                <p>
+                    Si cet utilisateur est offensant, ou simplement en dessous de l'âge légal, voilà l'endroit où le signaler.
+                </p>
+
+                <div class="row">
+                    <select class="columns" name="category">
+                        <option value="">Choisir un type de rapport</option>
+                        <option value="Underage">Mineur</option>
+                        <option value="Image Violation">Violation de droits d'image</option>
+                        <option value="Text Violation">Violation liée au texte</option>
+                        <option value="Offensive Profile">Profil offensant</option>
+                        <option value="Abusive User">Abus sur ce profil</option>
+                        <option value="Solicitation">Sollicitation</option>
+                        <option value="Other">Autre</option>
+                    </select>
+                </div>
+
+                <div class="row">
+                    <textarea class="columns" rows="4" name="message" placeholder="Entre les informations supplémentaires que tu penses utiles"></textarea>
+                </div>
+
+                <button class="btn-primary" type="submit">Signaler le profil</button>
+            </form>
+            <div class="form stage-success">
+                <a class="popup-close-btn" href="#"><i></i></a>
+
+                <h3>Signaler l'utilisateur</h3>
+
+                <p>
+                    Merci d'avoir pris le temps de faire un signalement.
+                </p>
+                <p>
+
+
+     Si tu as besoin d'ade supplémentaire, envoie un mail à l'aide <a href="/contact-us/">t</a>
+
+                </p>
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}
